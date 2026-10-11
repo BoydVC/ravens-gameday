@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ravens Game Day HQ</title>
+<meta name="theme-color" content="#241773">
+<style>/*__CSS__*/</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="brand">
+    <span class="crest" aria-hidden="true">
+      <svg viewBox="0 0 56 56" width="48" height="48">
+        <defs>
+          <linearGradient id="goldG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#f7d046"/><stop offset="1" stop-color="#c9a227"/>
+          </linearGradient>
+        </defs>
+        <circle cx="28" cy="28" r="26" fill="#241773" stroke="url(#goldG)" stroke-width="3"/>
+        <path d="M14 34 L28 12 L42 34 Z" fill="url(#goldG)" opacity=".95"/>
+        <text x="28" y="38" text-anchor="middle" font-size="11" font-weight="800" fill="#241773" font-family="system-ui,sans-serif">B</text>
+      </svg>
+    </span>
+    <div>
+      <h1>Ravens Game Day HQ</h1>
+      <p class="sub">Sunday Night Football · Week 5 · BAL @ ATL</p>
+    </div>
+  </div>
+  <div class="topmeta">
+    <span class="pill snf">SNF · NBC</span>
+    <span class="pill soft" id="recordPill">BAL 3-1</span>
+    <button id="btnWall" class="ghost" title="Wall display mode">🖥 Wall</button>
+    <button id="btnHelp" class="ghost" title="About this HQ">❓</button>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Game Day screens">
+  <button role="tab" class="tab on" data-tab="kickoff" aria-selected="true">⏱ Kickoff</button>
+  <button role="tab" class="tab" data-tab="season" aria-selected="false">📅 Season</button>
+  <button role="tab" class="tab" data-tab="matchup" aria-selected="false">⚔ Matchup</button>
+  <button role="tab" class="tab" data-tab="simmons" aria-selected="false">🎙 Simmons</button>
+  <button role="tab" class="tab" data-tab="radio" aria-selected="false">📻 Radio</button>
+</nav>
+
+<main class="stage">
+  <!-- KICKOFF -->
+  <section id="panel-kickoff" class="panel on" role="tabpanel">
+    <div class="hero-snf">
+      <div class="snf-banner">SUNDAY NIGHT FOOTBALL</div>
+      <div class="kick-meta">
+        <span>Week 5 · Sun Oct 11, 2026</span>
+        <span>Mercedes-Benz Stadium · Atlanta</span>
+      </div>
+      <div class="matchup-hero">
+        <div class="team bal">
+          <div class="abbr">BAL</div>
+          <div class="name">Ravens</div>
+          <div class="rec">3-1</div>
+        </div>
+        <div class="at-block">
+          <div class="at">AT</div>
+          <div class="kick-time">8:20 PM EDT</div>
+        </div>
+        <div class="team atl">
+          <div class="abbr">ATL</div>
+          <div class="name">Falcons</div>
+          <div class="rec">2-2</div>
+        </div>
+      </div>
+      <div class="countdown" id="countdown" aria-live="polite">
+        <div class="cd-unit"><span id="cdD">00</span><label>Days</label></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span id="cdH">00</span><label>Hours</label></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span id="cdM">00</span><label>Mins</label></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span id="cdS">00</span><label>Secs</label></div>
+      </div>
+      <p class="cd-status" id="cdStatus">Counting down to kickoff…</p>
+      <div class="broadcast-row">
+        <div class="bcast"><span class="b-label">TV</span><span>NBC · Peacock</span></div>
+        <div class="bcast"><span class="b-label">Radio</span><span>98 Rock 97.9 FM · WBAL 1090 AM</span></div>
+        <div class="bcast"><span class="b-label">Spanish</span><span>Tico Sports · WLZL 107.9 FM</span></div>
+      </div>
+    </div>
+    <div class="quick-cards">
+      <article class="qcard">
+        <h3>Venue</h3>
+        <p>Mercedes-Benz Stadium<br><span class="muted">Atlanta, GA · roof retractable</span></p>
+      </article>
+      <article class="qcard">
+        <h3>Series note</h3>
+        <p>Ravens lead all-time vs Falcons 5-2 (2-2 in Atlanta). Last at MBS: 2018.<br><span class="muted">Source: baltimoreravens.com game page</span></p>
+      </article>
+      <article class="qcard">
+        <h3>Streak</h3>
+        <p>Baltimore seeking 3rd straight win &amp; first 4-1 start since 2021.<br><span class="muted">Public preview copy · not a prediction</span></p>
+      </article>
+    </div>
+  </section>
+
+  <!-- SEASON -->
+  <section id="panel-season" class="panel" role="tabpanel" hidden>
+    <div class="panel-head">
+      <h2>2026 Season Strip</h2>
+      <p class="note">Results &amp; times from <b>baltimoreravens.com/schedule</b>. Tap a week for detail.</p>
+    </div>
+    <div class="week-strip" id="weekStrip" role="list"></div>
+    <article class="week-detail card" id="weekDetail">
+      <h3 id="wdTitle">Select a week</h3>
+      <div id="wdBody" class="wd-body"></div>
+    </article>
+  </section>
+
+  <!-- MATCHUP -->
+  <section id="panel-matchup" class="panel" role="tabpanel" hidden>
+    <div class="panel-head">
+      <h2>Matchup Board</h2>
+      <p class="note">Public labels only — no invented player stats, odds, or injury claims.</p>
+    </div>
+    <div class="matchup-board">
+      <div class="side-card bal-side">
+        <div class="side-top">BALTIMORE</div>
+        <div class="side-abbr">RAVENS</div>
+        <ul class="side-list">
+          <li><span>Record</span><b>3-1</b></li>
+          <li><span>Road</span><b>2-0</b></li>
+          <li><span>Last</span><b>W 24-18 vs TEN</b></li>
+          <li><span>Conference</span><b>AFC North</b></li>
+          <li><span>Stats / injuries</span><b class="dim">not loaded</b></li>
+        </ul>
+      </div>
+      <div class="vs-col">
+        <div class="vs-badge">SNF</div>
+        <div class="vs-line">WEEK 5</div>
+        <div class="vs-line gold">8:20 PM EDT</div>
+        <div class="vs-line">Mercedes-Benz Stadium</div>
+      </div>
+      <div class="side-card atl-side">
+        <div class="side-top">ATLANTA</div>
+        <div class="side-abbr">FALCONS</div>
+        <ul class="side-list">
+          <li><span>Record</span><b>2-2</b></li>
+          <li><span>Home</span><b class="dim">not loaded</b></li>
+          <li><span>Last</span><b>W 45-24 @ NO (Mon)</b></li>
+          <li><span>Conference</span><b>NFC South</b></li>
+          <li><span>Stats / injuries</span><b class="dim">not loaded</b></li>
+        </ul>
+      </div>
+    </div>
+    <article class="card checklist-card">
+      <h3>🏠 Boyd household watch checklist</h3>
+      <p class="note">Fun prep — not medical or parenting advice. Check items stay on this device.</p>
+      <ul class="checklist" id="checklist"></ul>
+      <button id="btnResetChecks" class="ghost sm">Reset checklist</button>
+    </article>
+  </section>
+
+  <!-- SIMMONS -->
+  <section id="panel-simmons" class="panel" role="tabpanel" hidden>
+    <div class="panel-head">
+      <h2>Simmons Sunday</h2>
+      <p class="note">Playful Bill Simmons–style pick card. <b>You</b> tap the pick — we do <b>not</b> invent Simmons’s actual pick.</p>
+    </div>
+    <article class="simmons-card card">
+      <div class="sim-header">
+        <span class="sim-badge">THE RINGER · FAN PICK</span>
+        <span class="sim-ep">Sunday Night · Week 5</span>
+      </div>
+      <h3 class="sim-title">“Alright, let’s do this…”</h3>
+      <p class="sim-blurb">Imagine Bill opening the SNF segment: purple vs red, Mercedes-Benz roof, primetime vibes. Lock <em>your</em> pick below — stored in localStorage only. No fake quotes attributed to Simmons.</p>
+      <div class="sim-picks" id="simPicks">
+        <button class="sim-pick" data-pick="BAL" id="pickBAL">
+          <span class="sp-team">BAL</span>
+          <span class="sp-name">Ravens</span>
+          <span class="sp-hint">Take Baltimore</span>
+        </button>
+        <button class="sim-pick" data-pick="ATL" id="pickATL">
+          <span class="sp-team">ATL</span>
+          <span class="sp-name">Falcons</span>
+          <span class="sp-hint">Take Atlanta</span>
+        </button>
+      </div>
+      <div class="sim-conf">
+        <label for="confRange">Confidence (1–5 bags)</label>
+        <input type="range" id="confRange" min="1" max="5" value="3">
+        <span id="confLabel">3 bags</span>
+      </div>
+      <div class="sim-note-wrap">
+        <label for="simNote">Your take (optional)</label>
+        <textarea id="simNote" rows="2" maxlength="200" placeholder="e.g. lean Ravens because… (your words only)"></textarea>
+      </div>
+      <div class="sim-status" id="simStatus">No pick locked yet.</div>
+      <div class="sim-actions">
+        <button id="btnLockPick" class="primary">🔒 Lock my pick</button>
+        <button id="btnClearPick" class="ghost">Clear</button>
+      </div>
+    </article>
+  </section>
+
+  <!-- RADIO -->
+  <section id="panel-radio" class="panel" role="tabpanel" hidden>
+    <div class="panel-head">
+      <h2>Radio &amp; Links</h2>
+      <p class="note">Call letters &amp; official URLs from Ravens game-day pages. Streams may be in-market only.</p>
+    </div>
+    <div class="radio-grid">
+      <article class="card">
+        <h3>📻 Local radio</h3>
+        <ul class="linklist">
+          <li><b>98 Rock</b> — 97.9 FM (English play-by-play)</li>
+          <li><b>WBAL</b> — 1090 AM (English)</li>
+          <li><b>Tico Sports</b> — WLZL El Zol 107.9 FM (Spanish)</li>
+        </ul>
+        <p class="muted sm">Also via Ravens Mobile App (in-market fans).</p>
+      </article>
+      <article class="card">
+        <h3>📺 Television</h3>
+        <ul class="linklist">
+          <li><b>NBC</b> — Sunday Night Football</li>
+          <li><b>Peacock</b> — streaming companion</li>
+        </ul>
+      </article>
+      <article class="card wide">
+        <h3>🔗 Official game-day links</h3>
+        <ul class="linklist urls" id="linkList"></ul>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>Ravens Game Day HQ · TokenMax · Sun Oct 11 2026</span>
+  <span>Public schedule only · localhost :4281 · no invented odds/stats</span>
+</footer>
+
+<div id="help" class="modal" hidden>
+  <div class="modalbox">
+    <h2>About Game Day HQ</h2>
+    <ol>
+      <li><b>Kickoff</b> — live countdown to 8:20 PM EDT at Mercedes-Benz Stadium.</li>
+      <li><b>Season</b> — clickable week chips with verified 2026 results &amp; remaining slate.</li>
+      <li><b>Matchup</b> — BAL vs ATL labels + a fun household watch checklist.</li>
+      <li><b>Simmons Sunday</b> — your own pick card (localStorage). Not Bill’s actual pick.</li>
+      <li><b>Radio</b> — 98 Rock / WBAL / Tico + official links.</li>
+    </ol>
+    <p class="note">Sources: baltimoreravens.com schedule &amp; Week 5 game page; atlantafalcons.com game center for ATL 2-2. Gaps labeled “not loaded.” Everything stays on this device.</p>
+    <button id="btnHelpClose" class="primary">Got it</button>
+  </div>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>/*__APP__*/</script>
+</body>
+</html>
