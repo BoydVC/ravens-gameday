@@ -31,7 +31,7 @@
   const CHECKLIST = [
     { id: "tv", label: "TV on · input set to NBC (or Peacock ready)" },
     { id: "snacks", label: "Snacks + drinks staged before kickoff" },
-    { id: "bedtime", label: "Kids bedtime plan before SNF (Char / Vic)" },
+    { id: "bedtime", label: "Kids bedtime plan before SNF (Alex / Sam)" },
     { id: "radio", label: "Optional: 98 Rock / WBAL as backup audio" },
     { id: "phone", label: "Phone on Do Not Disturb (or sports-only)" },
     { id: "purple", label: "Purple gear on the couch (optional flair)" },
